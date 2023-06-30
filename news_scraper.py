@@ -1,7 +1,7 @@
 from requests_html import HTMLSession
 import re
 
-def scrape_articles(topic):
+def scrape_articles(topic, number_of_articles=7):
     """
 
     Scrape the news articles from Google News for a given topic
@@ -22,7 +22,7 @@ def scrape_articles(topic):
 
     # Initalize URL
     query = topic.replace(' ', '+')
-    url = f'https://news.google.com/search?for={query}&hl=en-GB&gl=GB&ceid=GB:en'
+    url = f'https://news.google.com/search?for={query}&hl=en-IN&gl=IN&ceid=IN:en'
 
     # Get the page
     r = session.get(url=url)
@@ -37,6 +37,11 @@ def scrape_articles(topic):
 
     # Iterate over each article
     for article in articles:
+        
+        # Break if we have enough articles
+        if len(all_articles) == number_of_articles:
+            break
+
         # Get the title
         title = article.find('h3', first=True).text
 
@@ -51,17 +56,13 @@ def scrape_articles(topic):
         if unit == []:
             continue
         unit = unit[0]
-        if unit == 'Yesterday':
-            continue
-        
-        numbers = numbersRegex.findall(time)[0]
-        
-
-        if (int(numbers) > 12 and unit == 'hour') or (unit == 'day') or (unit == 'Yesterday'):
-            continue
-
+        if unit != 'Yesterday':
+            numbers = numbersRegex.findall(time)[0]
+            if (unit != 'hour' and unit != 'minute') and int(numbers) > 1:
+                continue
+    
         # Get the link
-        link = article.find('a', first=True).attrs['href']
+        link = article.find('a', first=True).absolute_links.pop()
 
         # Print the details
         newsarticle = {
@@ -73,9 +74,6 @@ def scrape_articles(topic):
         all_articles.append(newsarticle)
 
     return all_articles
-
-print(help(scrape_articles))
-    
     
 # if __name__ == '__main__':
 #     main()
