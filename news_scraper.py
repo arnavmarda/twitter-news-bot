@@ -48,6 +48,8 @@ def scrape_articles(topic, number_of_articles=7):
         # Get the source
         source = article.find('img', first=True).attrs.get('alt')
 
+        # TODO: Block certain sources - www.news18.com and www.dailymail.co.uk
+
         # Get the time
         time = article.find('time', first=True).text
         numbersRegex = re.compile(r'\d+')
