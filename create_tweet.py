@@ -1,5 +1,4 @@
 import google.generativeai as palm
-from langchain.prompts import PromptTemplate
 
 def summarize_article(article):
 
@@ -19,7 +18,7 @@ def summarize_article(article):
                 }
     
     # Create a prompt
-    prompt_template = """
+    prompt = f"""
     Summarize the following article and condense it into 2 bullet points. Add the title of the article at the top. Do not leave an empty line after the article. Only use information from the article provided below. Structure your response as follows:
 
     Format for Summary:
@@ -27,17 +26,11 @@ def summarize_article(article):
     - Bullet point 1
     - Bullet point 2
 
-    Title - {title}
-    Article - {article}
+    Title - {article['title']}
+    Article - {article['article']}
 
     Summary:
     """
-
-    # Create a PromptTemplate
-    PROMPT = PromptTemplate(template=prompt_template, input_variables=['title', 'article'])
-
-    # Create the prompt
-    prompt = PROMPT.format(title=article['title'], article=article['article'])
 
     # Generate the tweet
     try:
