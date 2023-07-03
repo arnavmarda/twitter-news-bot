@@ -7,10 +7,8 @@ app = Flask(__name__)
 def landing():
     return 'Hello World!'
 
-@app.route('/tweet', methods=['POST'])
+@app.route('/tweet', methods=['GET'])
 def tweet():
-
-    _ = request.get_data()
 
     print("Tweeting...")
     
