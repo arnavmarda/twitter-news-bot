@@ -11,4 +11,5 @@ def scrape_and_tweet(topic: str, title: str, num_articles: int) -> None:
     print("Creating tweet...")
     to_post = handle_articles_list(articles, title)
     print("Tweeting...")
-    tweet(to_post)
+    # tweet(to_post)
+    return to_post
