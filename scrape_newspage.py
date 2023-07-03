@@ -16,7 +16,11 @@ def scrape_news_article(url):
     # Get the page
     r = session.get(url=url)
 
-    title  = r.html.find('h1', first=True).text
+    # TODO: Add a try - except block here
+    try:
+        title  = r.html.find('h1', first=True).text
+    except:
+        title = ""
 
     # Get all article fragments (each fragment is a paragraph)
     article_fragments = r.html.find('p')
