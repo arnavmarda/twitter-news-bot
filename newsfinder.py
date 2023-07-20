@@ -7,9 +7,9 @@ from validators.domain import domain
 import sys
 
 class NewsFinder():
-    
+
     """
-    Object to scrape news articles from Google News and scrape the article text from the news website. 
+    API Object to scrape news articles from Google News and scrape the article text from the news website. 
     Allows filtering of Google News results.
     """
 
@@ -26,7 +26,18 @@ class NewsFinder():
             A list of sources to block, by default includes Daily Mail and News18            
         """
 
+        
+
         if blocked_sources is None:
+
+            # Check if blocked_sources is valid
+            if not isinstance(blocked_sources, list):
+                raise TypeError("blocked_sources must be a list")
+            
+            # Check if all elements in blocked_sources are strings
+            if not all(isinstance(source, str) for source in blocked_sources):
+                raise TypeError("blocked_sources must be a list of strings")
+
             self.blocked_sources = ["Daily Mail", "News18"]
         else:
             self.blocked_sources = blocked_sources + ["Daily Mail", "News18"]
@@ -388,8 +399,6 @@ class NewsFinder():
             sys.stdout.write("No articles found. Try different parameters")
             return []
         
-        if article_text is False:
-            return articles
         
         ################### Build Articles ######################
 
