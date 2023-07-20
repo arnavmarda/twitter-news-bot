@@ -5,7 +5,7 @@ import os
 class Tweeter():
 
     """
-    Object allowing users to tweet articles, summaries and other text to Twitter. 
+    API Object allowing users to tweet articles, summaries and other text to Twitter. 
     It leverages PaLM to summarize articles and then tweets them in chunks of 280 characters.
     """
 
@@ -31,7 +31,7 @@ class Tweeter():
   # Private Methods
   #####################################
 
-    def __tweet(self, text: str) -> None:
+    def __tweet(self, text: str) -> dict:
         """Private: Tweet the given text
         
         Parameters
@@ -41,7 +41,8 @@ class Tweeter():
 
         Returns
         -------
-        None
+        dict
+            A dictionary containing the total character count, the number of tweets posted, and the id of the parent tweet
         """
 
         # Create chunks
@@ -64,7 +65,7 @@ class Tweeter():
         for leaf_tweet in leaf_tweets:
             self.__child_tweet(text=leaf_tweet, client=client, parent_tweet_id=parent_tweet_id)
 
-        print(f"{total_char_count} char tweet posted succesfully in {no_of_chunks} chunks.")
+        return {"Total Character Count": total_char_count, "No. of Tweets": no_of_chunks, "Parent Tweet ID": parent_tweet_id}
 
     def __parent_tweet(text: str, client: Client) -> str | None:
         """Post the parent tweet and return the id of the tweet
@@ -309,7 +310,7 @@ class Tweeter():
         """
         return self.__client
 
-    def tweet(self, title: str|None, tweet: str|None, articles_list: list|None, use_palm: bool|None, prompt: str|None) -> None:
+    def tweet(self, title: str|None, tweet: str|None, articles_list: list|None, use_palm: bool|None, prompt: str|None) -> dict:
         """Tweet the given articles list
 
         Parameters
@@ -330,7 +331,8 @@ class Tweeter():
 
         Returns
         -------
-        None
+        tweet : dict
+            A dictionary containing the total character count, the number of tweets posted, and the id of the parent tweet
         """
 
         # Check if title is valid
@@ -374,7 +376,7 @@ class Tweeter():
             if title is not None:
                 tweet = f"{title}:\n\n{tweet}"
         
-        self.__tweet(tweet)
+        return self.__tweet(tweet)
         
 
         
