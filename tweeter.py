@@ -4,6 +4,11 @@ import os
 
 class Tweeter():
 
+    """
+    Object allowing users to tweet articles, summaries and other text to Twitter. 
+    It leverages PaLM to summarize articles and then tweets them in chunks of 280 characters.
+    """
+
   #####################################
   # Initialization
   #####################################

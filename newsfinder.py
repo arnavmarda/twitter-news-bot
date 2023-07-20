@@ -7,6 +7,11 @@ from validators.domain import domain
 import sys
 
 class NewsFinder():
+    
+    """
+    Object to scrape news articles from Google News and scrape the article text from the news website. 
+    Allows filtering of Google News results.
+    """
 
     #####################################
     # Initialization
@@ -252,6 +257,34 @@ class NewsFinder():
         """
 
         return self.blocked_sources
+    
+    @property
+    def blocked_sources(self) -> list:
+        """Get the list of blocked sources
+
+        Returns
+        -------
+        list
+            The list of blocked sources
+        """
+
+        return self.__blocked_sources
+    
+    @blocked_sources.setter
+    def blocked_sources(self, sources: list) -> None:
+        """Set the list of blocked sources
+
+        Parameters
+        ----------
+        sources : list
+            A list of sources to block
+        """
+
+        # Check if the sources is valid
+        if not isinstance(sources, list):
+            raise TypeError("sources must be a list")
+
+        self.__blocked_sources = sources
     
     def update_blocked_sources(self, sources: list) -> int:
         """Update the list of blocked sources by completely replacing
