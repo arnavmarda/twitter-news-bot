@@ -2,6 +2,7 @@
 from newsfinder import NewsFinder
 from tweeter import Tweeter
 import os
+from cron_validator import CronValidator
 
 class TwitterNewsBot():
     """
@@ -238,8 +239,11 @@ jobs:
         Raises
         ------
         TypeError
-            If cron is not a string
+            If cron is not a string \n
             If file is not a string
+
+        ValueError
+            If cron is not a valid cron job
         """
 
         # Check if cron is a string
@@ -249,6 +253,10 @@ jobs:
         # Check if file is a string
         if not isinstance(file, str):
             raise TypeError("file must be a string")
+        
+        # Check if cron is valid cron job
+        if CronValidator.parse(cron) is not None:
+            raise ValueError("cron must be a valid cron job")
         
         # Build the .yml file
         text = self.__give_yaml_text(cron=cron, file=file)
