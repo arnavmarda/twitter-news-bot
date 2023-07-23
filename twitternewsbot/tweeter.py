@@ -1,12 +1,14 @@
 import google.generativeai as palm
 from tweepy import Client
 import os
+from dotenv import load_dotenv
 
 class Tweeter():
 
     """
     API Object allowing users to tweet articles, summaries and other text to Twitter. 
     It leverages PaLM to summarize articles and then tweets them in chunks of 280 characters.
+    Requires having the Twitter API API_KEY, API_SECRET_KEY, ACCESS_TOKEN and ACCESS_TOKEN_SECRET set as environment variables.
     """
 
   #####################################
@@ -15,13 +17,34 @@ class Tweeter():
     
     def __init__(self):
         """Initialize the class with tokens and tweepy client"""
+
+        # Load environment variables
+        load_dotenv()
         try:
-            self.__BEARER_TOKEN = os.environ['BEARER_TOKEN']
+            self.__API_KEY = os.getenv("API_KEY")
         except:
-            raise Exception("BEARER_TOKEN not found in environment variables")
+            raise Exception("API_KEY not found in environment variables")
+        
+        try:
+            self.__API_SECRET_KEY = os.getenv("API_SECRET_KEY")
+        except:
+            raise Exception("API_SECRET_KEY not found in environment variables")
+        
+        try:
+            self.__ACCESS_TOKEN = os.getenv("ACCESS_TOKEN")
+        except:
+            raise Exception("ACCESS_TOKEN not found in environment variables")
+        
+        try:
+            self.__ACCESS_TOKEN_SECRET = os.getenv("ACCESS_TOKEN_SECRET")
+        except:
+            raise Exception("ACCESS_TOKEN_SECRET not found in environment variables")
 
         try:
-            self.__client = Client(bearer_token=self.__BEARER_TOKEN)
+            self.__client = Client(consumer_key=self.__API_KEY, 
+                                   consumer_secret=self.__API_SECRET_KEY, 
+                                   access_token=self.__ACCESS_TOKEN, 
+                                   access_token_secret=self.__ACCESS_TOKEN_SECRET)
         except:
             raise Exception("Authentication Failed. Invalid Twitter API Credentials")
     
@@ -52,30 +75,26 @@ class Tweeter():
 
         no_of_chunks = len(text)
 
-        client = self.__client
-
         # Seperate parent tweet from children tweets
         parent_tweet_text = text[0]
         leaf_tweets = text[1:]
 
         # Post parent tweet
-        parent_tweet_id = self.__parent_tweet(text=parent_tweet_text, client=client)
+        parent_tweet_id = self.__parent_tweet(text=parent_tweet_text)
 
         # Post children tweets
         for leaf_tweet in leaf_tweets:
-            self.__child_tweet(text=leaf_tweet, client=client, parent_tweet_id=parent_tweet_id)
+            self.__child_tweet(text=leaf_tweet, parent_tweet_id=parent_tweet_id)
 
         return {"Total Character Count": total_char_count, "No. of Tweets": no_of_chunks, "Parent Tweet ID": parent_tweet_id}
 
-    def __parent_tweet(text: str, client: Client) -> str | None:
+    def __parent_tweet(self, text: str) -> str | None:
         """Post the parent tweet and return the id of the tweet
         
         Parameters
         ----------
         text : str
             The text to be tweeted
-        client : Client
-            The tweepy client object i.e. user to post the tweet
         
         Returns
         -------
@@ -83,20 +102,18 @@ class Tweeter():
             The id of the tweet
         """
         try:
-            parent_tweet_id = client.create_tweet(text=text).data['id']
+            parent_tweet_id = self.__client.create_tweet(text=text).data['id']
             return parent_tweet_id
         except Exception as error:
-            print(f"Tweet not posted succesfully: {error}")
+            raise Exception(f"Tweet not posted succesfully: {error}")
 
-    def __child_tweet(text: str, client: Client, parent_tweet_id: str) -> None:
+    def __child_tweet(self, text: str, parent_tweet_id: str) -> None:
         """Post the child tweet as a reply to the parent tweet
         
         Parameters
         ----------
         text : str
             The text to be tweeted as a reply to the parent tweet
-        client : Client
-            The tweepy client object i.e. user to post the tweet
         parent_tweet_id : str
             The id of the parent tweet
 
@@ -105,12 +122,12 @@ class Tweeter():
         None
         """
         try:
-            client.create_tweet(text=text, in_reply_to_tweet_id=parent_tweet_id)
+            self.__client.create_tweet(text=text, in_reply_to_tweet_id=parent_tweet_id)
         except Exception as error:
-            print(f"Tweet not posted succesfully: {error}")
+            raise Exception(f"Tweet not posted succesfully: {error}")
 
 
-    def __create_chunks(text: str) -> list(str):
+    def __create_chunks(self, text: str) -> list:
         """Create chunks of 280 characters each from the given text while leveraging the yield keyword
         
         Parameters
@@ -145,7 +162,7 @@ class Tweeter():
 
         # Get the API key
         try:
-            GOOGLE_API_KEY = os.environ['GOOGLE_API_KEY']
+            GOOGLE_API_KEY = os.getenv('GOOGLE_API_KEY')
         except:
             raise Exception("GOOGLE_API_KEY not found in environment variables")
 
@@ -310,7 +327,7 @@ class Tweeter():
         """
         return self.__client
 
-    def tweet(self, title: str|None, tweet: str|None, articles_list: list|None, use_palm: bool|None, prompt: str|None) -> dict:
+    def tweet(self, title: str|None = None, tweet: str|None = None, articles_list: list|None = None, use_palm: bool = False, prompt: str|None = None) -> dict:
         """Tweet the given articles list
 
         Parameters
@@ -344,7 +361,7 @@ class Tweeter():
             raise TypeError("tweet must be a string")
         
         # Check if articles_list is valid
-        if articles_list is not None and not isinstance(articles_list, list(dict)):
+        if articles_list is not None and (not isinstance(articles_list, list) or not all(isinstance(article, dict) for article in articles_list)):
             raise TypeError("articles_list must be a list of dicts")
         
         # Check if use_palm is valid

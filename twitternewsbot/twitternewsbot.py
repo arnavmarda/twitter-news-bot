@@ -14,7 +14,7 @@ class TwitterNewsBot():
     # Initialization
     #####################################
 
-    def __init__(self, news_finder: NewsFinder, tweeter_obj: Tweeter, topic: str, no_of_articles: int|None = 5):
+    def __init__(self, news_finder: NewsFinder, tweeter_obj: Tweeter, topic: str, no_of_articles: int = 5):
         """Initialize the Bot class
         
         Parameters
@@ -60,8 +60,8 @@ class TwitterNewsBot():
         # Set the attributes
         self.news_finder = news_finder
         self.tweeter_obj = tweeter_obj
-        self.topic = topic
-        self.no_of_articles = no_of_articles
+        self.__topic = topic
+        self.__no_of_articles = no_of_articles
 
     #####################################
     # Private Methods
@@ -82,7 +82,7 @@ class TwitterNewsBot():
         """
         
         # Build the pipeline
-        articles = self.news_finder.get_news_articles(topic=self.topic, number_of_articles=self.no_of_articles)
+        articles = self.news_finder.get_news_articles(topic=self.__topic,number_of_articles=self.__no_of_articles, article_text=True)
         return self.tweeter_obj.tweet(articles_list=articles, **kwargs)
     
     def __give_yaml_text(self, cron: str, file: str) -> str:
@@ -103,7 +103,7 @@ class TwitterNewsBot():
         """
         
         # Build the .yaml file text
-        text = yaml_file = f"""---
+        text = f"""---
 name: "Twitter News Bot"
 on:
   schedule:
@@ -142,7 +142,7 @@ jobs:
         str
             The topic to search for news articles
         """
-        return self.topic
+        return self.__topic
 
     @topic.setter
     def topic(self, topic: str) -> None:
@@ -166,7 +166,7 @@ jobs:
         if not isinstance(topic, str):
             raise TypeError("topic must be a string")
         
-        self.topic = topic
+        self.__topic = topic
 
     @property
     def no_of_articles(self) -> int:
@@ -177,7 +177,7 @@ jobs:
         int
             The number of articles to find and scrape
         """
-        return self.no_of_articles
+        return self.__no_of_articles
     
     @no_of_articles.setter
     def no_of_articles(self, no_of_articles: int) -> None:
@@ -201,9 +201,9 @@ jobs:
         if not isinstance(no_of_articles, int):
             raise TypeError("no_of_articles must be an integer")
         
-        self.no_of_articles = no_of_articles
+        self.__no_of_articles = no_of_articles
 
-    def run_pipeline(self, **kwargs) -> dict:
+    def run(self, **kwargs) -> dict:
         """
         Build article list, scrape articles and tweet summarized tweet for the given topic.
 
@@ -221,7 +221,7 @@ jobs:
         # Run the pipeline
         return self.__build_pipeline(**kwargs)
     
-    def build_yaml(self, cron: str, file: str) -> None:
+    def build_yaml(self, cron: str, file_name: str) -> None:
         """Build a .yaml file for Github Actions to run the cron job
         
         Parameters
@@ -229,7 +229,7 @@ jobs:
         cron : str
             The cron job to run the pipeline.
             You can get a formatted cron job string from https://crontab.guru/
-        file : str
+        file_name : str
             The file to run the pipeline from
 
         Returns
@@ -251,15 +251,15 @@ jobs:
             raise TypeError("cron must be a string")
         
         # Check if file is a string
-        if not isinstance(file, str):
-            raise TypeError("file must be a string")
+        if not isinstance(file_name, str):
+            raise TypeError("file_name must be a string")
         
         # Check if cron is valid cron job
-        if CronValidator.parse(cron) is not None:
+        if CronValidator.parse(cron) is None:
             raise ValueError("cron must be a valid cron job")
         
         # Build the .yml file
-        text = self.__give_yaml_text(cron=cron, file=file)
+        text = self.__give_yaml_text(cron=cron, file=file_name)
 
         try:
             os.mkdir(".github")
@@ -274,6 +274,3 @@ jobs:
         file = open(".github/workflows/python-app.yml", "w")
         file.write(text)
         file.close()
-        
-
-    

@@ -17,7 +17,7 @@ class NewsFinder():
     # Initialization
     #####################################
 
-    def __init__(self, blocked_sources: list|None):
+    def __init__(self, blocked_sources: list|None = None):
         """Initialize the NewsFinder class
         
         Parameters
@@ -29,6 +29,8 @@ class NewsFinder():
         
 
         if blocked_sources is None:
+            self.blocked_sources = ["Daily Mail", "News18"]
+        else:
 
             # Check if blocked_sources is valid
             if not isinstance(blocked_sources, list):
@@ -38,8 +40,6 @@ class NewsFinder():
             if not all(isinstance(source, str) for source in blocked_sources):
                 raise TypeError("blocked_sources must be a list of strings")
 
-            self.blocked_sources = ["Daily Mail", "News18"]
-        else:
             self.blocked_sources = blocked_sources + ["Daily Mail", "News18"]
 
     #####################################
@@ -153,7 +153,7 @@ class NewsFinder():
 
         return {'title': title, 'article': body}
     
-    def __build_list_of_articles(self, articles_list: list(dict)) -> list:
+    def __build_list_of_articles(self, articles_list: list) -> list:
         """Private: Build a list of articles from the given list of dictionaries
         
         Parameters
@@ -207,7 +207,7 @@ class NewsFinder():
             The url to scrape
         """
 
-        return f'https://news.google.com/search?q={topic}{source_url}{period_url}&hl=en-IN&gl=IN&ceid=IN:en'
+        return f'https://news.google.com/search?q={topic_url}{source_url}{period_url}&hl=en-IN&gl=IN&ceid=IN:en'
         
     
     ###############################
@@ -314,7 +314,7 @@ class NewsFinder():
         self.blocked_sources = sources
         return len(self.blocked_sources)
     
-    def get_news_articles(self, topic: str|None = None, number_of_articles: int|None = None, source: str|None = None, period: list|None = "Any time", article_text: bool|None = False) -> list:
+    def get_news_articles(self, topic: str|None = None, number_of_articles: int|None = None, source: str|None = None, period: str = "Any time", article_text: bool = False) -> list:
         """Get the news articles for a given topic or for a given source filtered by date
         
         Parameters
@@ -356,7 +356,7 @@ class NewsFinder():
         if source is not None and not isinstance(source, str):
             raise TypeError("source must be a string")
 
-        if not domain(source):
+        if source is not None and not domain(source):
             raise ValueError("source must be a valid domain name")
 
         # Check if the article_text is valid
@@ -372,18 +372,22 @@ class NewsFinder():
         # If topic is provided
         if topic is not None:
             topic_url = topic + " "
+        else:
+            topic_url = ""
 
         # If source is provided
         if source is not None:
-            source_url = "site:" + source + " "
+            source_url = " site:" + source
+        else:
+            source_url = ""
 
         # If period is provided
 
         period_mappings = {"Any time": "",
-                           "Past hour": "when:1h",
-                           "Past 24 hours": "when:1d",
-                           "Past week": "when:7d",
-                           "Past year": "when:1y"}
+                           "Past hour": " when:1h",
+                           "Past 24 hours": " when:1d",
+                           "Past week": " when:7d",
+                           "Past year": " when:1y"}
 
         period_url = period_mappings[period]
 
@@ -401,7 +405,7 @@ class NewsFinder():
         
         
         ################### Build Articles ######################
-
-        articles = self.__build_list_of_articles(articles)
+        if article_text:
+            articles = self.__build_list_of_articles(articles)
 
         return articles
