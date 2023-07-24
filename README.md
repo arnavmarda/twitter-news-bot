@@ -1,5 +1,7 @@
 
-![Logo](https://github.com/arnavmarda/twitter-news-bot/blob/main/docs/logo.png =200x200)
+<div align=center>
+<img alt="Logo" src="https://github.com/arnavmarda/twitter-news-bot/blob/main/docs/logo.png" width=200 />
+</div>
 
 # twitter-news-bot
 
