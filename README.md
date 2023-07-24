@@ -1,5 +1,5 @@
 
-![Logo](https://github.com/arnavmarda/twitter-news-bot/blob/main/docs/logo.png)
+![Logo](https://github.com/arnavmarda/twitter-news-bot/blob/main/docs/logo.png =200x200)
 
 # twitter-news-bot
 
