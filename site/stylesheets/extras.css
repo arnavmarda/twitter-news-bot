@@ -1,0 +1,10 @@
+.md-ellipsis {
+    font-family: 'Courier', monospace;
+    color: cyan;
+}
+
+.md-typeset h1 {
+    color: white;
+    font-weight: bold;
+    font-family: 'Roboto', monospace;
+}

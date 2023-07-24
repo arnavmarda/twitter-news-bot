@@ -1,5 +1,7 @@
 site_name: twitter-news-bot
 
+site_url: https://arnavmarda.github.io/twitter-news-bot/
+
 theme:
   name: "material"
   palette:
@@ -19,6 +21,7 @@ theme:
     - search.share
     - navigation.top
     - navigation.footer
+    - instant
   icon:
     repo: fontawesome/brands/github
 
@@ -56,3 +59,7 @@ repo_url: https://github.com/arnavmarda/twitter-news-bot
 
 extra_css:
   - stylesheets/extras.css
+
+markdown_extensions:
+  - attr_list
+  - md_in_html
