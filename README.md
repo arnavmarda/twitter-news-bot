@@ -58,3 +58,7 @@ tnb = TwitterNewsBot(nf, t, topic="AI")
 # Run the TwitterNewsBOt to scrape articles, extract them, summarize them and post them as tweets
 tnb.run()
 ```
+
+# Future Updates
+- [ ] Add support for other summarization models such as OpenAI.
+- [ ] Add region based searching for news articles on Google News.
