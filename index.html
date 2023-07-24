@@ -294,9 +294,74 @@
         
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Home
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="." class="md-nav__link md-nav__link--active">
         Home
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#quick-start" class="md-nav__link">
+    Quick Start
+  </a>
+  
+    <nav class="md-nav" aria-label="Quick Start">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#installation" class="md-nav__link">
+    Installation
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#requirements-before-using-the-api" class="md-nav__link">
+    Requirements - before using the API
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#usage" class="md-nav__link">
+    Usage
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#future-updates" class="md-nav__link">
+    Future Updates
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -431,6 +496,55 @@
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#quick-start" class="md-nav__link">
+    Quick Start
+  </a>
+  
+    <nav class="md-nav" aria-label="Quick Start">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#installation" class="md-nav__link">
+    Installation
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#requirements-before-using-the-api" class="md-nav__link">
+    Requirements - before using the API
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#usage" class="md-nav__link">
+    Usage
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#future-updates" class="md-nav__link">
+    Future Updates
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -460,12 +574,12 @@
 <li>Leverage PaLM to generate summaries from articles as tweets and to generate tweets.</li>
 <li>Pipeline and automate the scraping and tweeting procedure using a <code>cron</code> job.</li>
 </ol>
-<h1 id="quick-start">Quick Start</h1>
+<h2 id="quick-start">Quick Start</h2>
 <p>For complete documentation and examples, please refer to the <a href="https://arnavmarda.github.io/twitter-news-bot/">documentation</a>.</p>
-<h2 id="installation">Installation</h2>
+<h3 id="installation">Installation</h3>
 <pre><code class="language-bash">pip install twitter-news-bot
 </code></pre>
-<h2 id="requirements-before-using-the-api">Requirements - before using the API</h2>
+<h3 id="requirements-before-using-the-api">Requirements - before using the API</h3>
 <p>For more information on how to generate the following keys and tokens, please refer to the <a href="https://arnavmarda.github.io/twitter-news-bot/">documentation</a>.</p>
 <ol>
 <li>
@@ -488,7 +602,7 @@ ACCESS_TOKEN=&quot;your-key-here&quot;
 ACCESS_TOKEN_SECRET=&quot;your-key-here&quot;
 GOOGLE_API_KEY=&quot;your-key-here&quot;
 </code></pre>
-<h2 id="usage">Usage</h2>
+<h3 id="usage">Usage</h3>
 <p>The API is very simple to use. Here is a quick example:</p>
 <pre><code class="language-python">from twitter_news_bot.tweeter import Tweeter
 from twitter_news_bot.newsfinder import NewsFinder
@@ -504,6 +618,11 @@ tnb = TwitterNewsBot(nf, t, topic=&quot;AI&quot;)
 # Run the TwitterNewsBOt to scrape articles, extract them, summarize them and post them as tweets
 tnb.run()
 </code></pre>
+<h2 id="future-updates">Future Updates</h2>
+<ul>
+<li>[ ] Add support for other summarization models such as OpenAI.</li>
+<li>[ ] Add region based searching for news articles on Google News.</li>
+</ul>
 
 
 
