@@ -13,15 +13,15 @@ A python API allowing users to:
 4. Leverage PaLM to generate summaries from articles as tweets and to generate tweets.
 5. Pipeline and automate the scraping and tweeting procedure using a `cron` job.
 
-# Quick Start
+## Quick Start
 For complete documentation and examples, please refer to the [documentation](https://arnavmarda.github.io/twitter-news-bot/).
 
-## Installation
+### Installation
 ```bash
 pip install twitter-news-bot
 ```
 
-## Requirements - before using the API
+### Requirements - before using the API
 For more information on how to generate the following keys and tokens, please refer to the [documentation](https://arnavmarda.github.io/twitter-news-bot/).
 
 1. To use the `tweepy` API to post tweets, you must have a Twitter developer account and create an app. You can create an app [here](https://developer.twitter.com/en/apps). Don't worry, Twitter gives you 1 free app. Once you have created an app, you will need to generate the following keys and tokens:
@@ -41,7 +41,7 @@ ACCESS_TOKEN_SECRET="your-key-here"
 GOOGLE_API_KEY="your-key-here"
 ```
 
-## Usage
+### Usage
 The API is very simple to use. Here is a quick example:
 ```python
 from twitter_news_bot.tweeter import Tweeter
@@ -58,3 +58,7 @@ tnb = TwitterNewsBot(nf, t, topic="AI")
 # Run the TwitterNewsBOt to scrape articles, extract them, summarize them and post them as tweets
 tnb.run()
 ```
+
+## Future Updates
+- [ ] Add support for other summarization models such as OpenAI.
+- [ ] Add region based searching for news articles on Google News.
