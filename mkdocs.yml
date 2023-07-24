@@ -15,6 +15,7 @@ theme:
     - navigation.tabs
     - navigation.tracking
     - navigation.expand
+    - navigation.path
     - toc.follow
     - search.suggest
     - search.highlight
