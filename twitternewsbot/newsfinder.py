@@ -226,6 +226,11 @@ class NewsFinder():
         -------
         int
             The number of blocked sources
+
+        Raises
+        ------
+        TypeError
+            If sources is not a list
         """
 
         # Check if the sources is valid
@@ -252,7 +257,16 @@ class NewsFinder():
         -------
         int
             The number of blocked sources
+        
+        Raises
+        ------
+        TypeError
+            If sources is not a list
         """
+
+        # Check if the sources is valid
+        if not isinstance(sources, list):
+            raise TypeError("Sources must be a list")
 
         for source in sources:
             self.blocked_sources.remove(source)
@@ -289,6 +303,15 @@ class NewsFinder():
         ----------
         sources : list
             A list of sources to block
+        
+        Returns
+        -------
+        None
+            
+        Raises
+        ------
+        TypeError
+            If sources is not a list
         """
 
         # Check if the sources is valid
@@ -298,7 +321,7 @@ class NewsFinder():
         self.__blocked_sources = sources
     
     def update_blocked_sources(self, sources: list) -> int:
-        """Update the list of blocked sources by completely replacing
+        """Update the list of blocked sources by completely replacing existing blocked sources
 
         Parameters
         ----------
@@ -309,8 +332,16 @@ class NewsFinder():
         -------
         int
             The number of blocked sources
+        
+        Raises
+        ------
+        TypeError
+            If sources is not a list
         """
-
+        # Check if the sources is valid
+        if not isinstance(sources, list):
+            raise TypeError("Sources must be a list")
+        
         self.blocked_sources = sources
         return len(self.blocked_sources)
     
@@ -321,16 +352,12 @@ class NewsFinder():
         ----------
         topic : str, optional
             The topic to search for, by default None
-
         number_of_articles : int, optional
             The number of articles to scrape, by default None which gives all the possible articles
-
         source : str, optional
             The domain for the website of the source to search for, by default None. For example, "dailymail.co.uk" or "bbc.com"
-
         period : list, optional
             The period to search for, by default "Any time". Period must be one of ["Any time", "Past hour", "Past 24 hours", "Past week", "Past year"]
-
         article_text : bool, optional
             Whether to scrape the article text or not, by default False
         
@@ -338,6 +365,23 @@ class NewsFinder():
         -------
         list
             A list of dictionaries containing the title, source, link and article body of the news articles (only if article_text is True)
+
+        Raises
+        ------
+        ValueError
+            If the period is not one of ["Any time", "Past hour", "Past 24 hours", "Past week", "Past year"].
+        ValueError
+            If the number_of_articles is not a positive integer
+        TypeError
+            If the topic is not a string
+        TypeError
+            If the source is not a string
+        ValueError
+            If the source is not a valid domain name
+        TypeError
+            If the article_text is not a boolean
+        ValueError
+            If the topic and source are both None
         """
 
         # Check if the period is valid

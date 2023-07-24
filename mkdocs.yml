@@ -1,0 +1,58 @@
+site_name: twitter-news-bot
+
+theme:
+  name: "material"
+  palette:
+    scheme: slate
+    primary: black
+    accent: cyan
+  logo: logo.png
+  font:
+    text: Victor
+  features:
+    - navigation.tabs
+    - navigation.tracking
+    - navigation.expand
+    - toc.follow
+    - search.suggest
+    - search.highlight
+    - search.share
+    - navigation.top
+    - navigation.footer
+  icon:
+    repo: fontawesome/brands/github
+
+nav:
+  - Home: index.md
+  - Installation: installation.md
+  - Using Github Actions: github-actions.md
+  - API Reference:
+    - News Finder: newsfinder.md
+    - Tweeter: tweeter.md
+    - Twitter News Bot: twitternewsbot.md
+
+plugins:
+  - mkdocstrings:
+      handlers:
+        python:
+          path: [twitternewsbot]
+          options:
+            docstring_style: numpy
+            docstring_section_style: spacy
+            members_order: source
+            filters: 
+              - "!^__"
+  - search
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/arnavmarda
+  generator: false
+
+copyright: Copyright &copy; 2023 Arnav Marda
+
+repo_url: https://github.com/arnavmarda/twitter-news-bot
+
+extra_css:
+  - stylesheets/extras.css

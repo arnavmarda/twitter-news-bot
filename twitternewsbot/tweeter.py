@@ -343,13 +343,30 @@ class Tweeter():
             A boolean value indicating whether to use PaLM to generate tweet with prompt
         prompt : str, optional
             The prompt to be used for the summarization with PaLM
-        rewrite_with_AI : bool, optional
-            A boolean value indicating whether to rewrite the tweet with AI or not according to prompt
 
         Returns
         -------
         tweet : dict
             A dictionary containing the total character count, the number of tweets posted, and the id of the parent tweet
+        
+        Raises
+        ------
+        TypeError
+            If title is not a string
+        TypeError
+            If tweet is not a string
+        TypeError
+            If articles_list is not a list of dictionaries
+        TypeError
+            If use_palm is not a boolean
+        ValueError
+            If use_palm is True and tweet or articles_list is not None
+        ValueError
+            If use_palm is True and prompt is None
+        ValueError
+            If tweet and articles_list are both not None
+        TypeError
+            If prompt is not a string
         """
 
         # Check if title is valid

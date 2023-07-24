@@ -239,9 +239,9 @@ jobs:
         Raises
         ------
         TypeError
-            If cron is not a string \n
-            If file is not a string
-
+            If cron is not a string
+        TypeError
+            If file_name is not a string
         ValueError
             If cron is not a valid cron job
         """
