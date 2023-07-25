@@ -2,3 +2,7 @@ __pycache__
 .DS_Store
 .env
 main.py
+dist
+twitternewsbot.egg-info
+setup.py
+setup.cfg

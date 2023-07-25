@@ -1,15 +1,21 @@
 from distutils.core import setup
+from pathlib import Path
+this_directory = Path(__file__).parent
+long_description = (this_directory / "README.md").read_text()
+
 setup(
   name = 'twitternewsbot',         # How you named your package folder (MyLib)
   packages = ['twitternewsbot'],   # Chose the same as "name"
-  version = '2.0',      # Start with a small number and increase it with every change you make
+  version = '2.0.2',      # Start with a small number and increase it with every change you make
   license='MIT',        # Chose a license from here: https://help.github.com/articles/licensing-a-repository
   description = 'Python API allowing you to automize a personalized news delivery system.',   # Give a short description about your library
   author = 'Arnav Marda',                   # Type in your name
   author_email = 'arnavmarda@gmail.com',      # Type in your E-Mail
   url = 'https://github.com/arnavmarda/twitter-news-bot/',   # Provide either the link to your github or to your website
-  download_url = 'https://github.com/user/reponame/archive/v_01.tar.gz',    # I explain this later on
+  download_url = 'https://github.com/arnavmarda/twitter-news-bot/archive/refs/tags/v2.0.tar.gz',    # I explain this later on
   keywords = ['AI', 'Twitter', 'News', 'Automation'],   # Keywords that define your package best
+  long_description = long_description,
+  long_description_content_type="text/markdown",
   install_requires=[            # I get to this in a second
           'requests==2.31.0',
           'requests-html==0.10.0',

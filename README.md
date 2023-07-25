@@ -18,7 +18,7 @@ For complete documentation and examples, please refer to the [documentation](htt
 
 ## Installation
 ```bash
-pip install twitter-news-bot
+pip install twitternewsbot
 ```
 
 ## Requirements - before using the API
@@ -60,5 +60,5 @@ tnb.run()
 ```
 
 # Future Updates
-- [ ] Add support for other summarization models such as OpenAI.
-- [ ] Add region based searching for news articles on Google News.
+- Add support for other summarization models such as OpenAI.
+- Add region based searching for news articles on Google News.
