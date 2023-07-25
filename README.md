@@ -4,7 +4,12 @@
 </div>
 
 <div align="center">
+
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![PyPI version](https://badge.fury.io/py/twitternewsbot.svg)](https://badge.fury.io/py/twitternewsbot)
+
+[![forthebadge made-with-python](http://ForTheBadge.com/images/badges/made-with-python.svg)](https://www.python.org/)
+
 </div>
 
 # twitter-news-bot
