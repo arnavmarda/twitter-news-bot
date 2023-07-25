@@ -1,9 +1,9 @@
 
-<div align=center>
+<div align="center">
 <img alt="Logo" src="https://github.com/arnavmarda/twitter-news-bot/blob/main/docs/logo.png" width=200 />
 </div>
 
-<div align=center>
+<div align="center">
 [![PyPI version](https://badge.fury.io/py/twitternewsbot.svg)](https://badge.fury.io/py/twitternewsbot)
 </div>
 
