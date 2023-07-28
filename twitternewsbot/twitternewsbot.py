@@ -1,8 +1,6 @@
 # Import statements
 from newsfinder import NewsFinder
 from tweeter import Tweeter
-import os
-from cron_validator import CronValidator
 
 class TwitterNewsBot():
     """
@@ -84,50 +82,6 @@ class TwitterNewsBot():
         # Build the pipeline
         articles = self.news_finder.get_news_articles(topic=self.__topic,number_of_articles=self.__no_of_articles, article_text=True)
         return self.tweeter_obj.tweet(articles_list=articles, **kwargs)
-    
-    def __give_yaml_text(self, cron: str, file: str) -> str:
-        """Private: Build the .yaml file text for Github Actions to run the cron job
-        
-        Parameters
-        ----------
-        cron : str
-            The cron job to run the pipeline.
-            You can get a formatted cron job string from https://crontab.guru/
-        file : str
-            The file to run the pipeline from
-
-        Returns
-        -------
-        str
-            The .yaml file text for Github Actions to run the cron job
-        """
-        
-        # Build the .yaml file text
-        text = f"""---
-name: "Twitter News Bot"
-on:
-  schedule:
-    - cron: '{cron}'
-
-jobs:
-  python-job:
-    name: "Python job"
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
-      - name: Setup python
-        uses: actions/setup-python@v2
-        with:
-          python-version: '3.11.3'
-      - name: Install dependencies
-        run: pip install -r requirements.txt
-      - name: Run python script
-        run: python {file}"""
-
-        return text
-
-    
     
     ###############################
     # Public Methods - API Methods
@@ -220,57 +174,3 @@ jobs:
 
         # Run the pipeline
         return self.__build_pipeline(**kwargs)
-    
-    def build_yaml(self, cron: str, file_name: str) -> None:
-        """Build a .yaml file for Github Actions to run the cron job
-        
-        Parameters
-        ----------
-        cron : str
-            The cron job to run the pipeline.
-            You can get a formatted cron job string from https://crontab.guru/
-        file_name : str
-            The file to run the pipeline from
-
-        Returns
-        -------
-        None
-
-        Raises
-        ------
-        TypeError
-            If cron is not a string
-        TypeError
-            If file_name is not a string
-        ValueError
-            If cron is not a valid cron job
-        """
-
-        # Check if cron is a string
-        if not isinstance(cron, str):
-            raise TypeError("cron must be a string")
-        
-        # Check if file is a string
-        if not isinstance(file_name, str):
-            raise TypeError("file_name must be a string")
-        
-        # Check if cron is valid cron job
-        if CronValidator.parse(cron) is None:
-            raise ValueError("cron must be a valid cron job")
-        
-        # Build the .yml file
-        text = self.__give_yaml_text(cron=cron, file=file_name)
-
-        try:
-            os.mkdir(".github")
-        except FileExistsError:
-            pass
-
-        try:
-            os.mkdir(".github/workflows")
-        except FileExistsError:
-            pass
-
-        file = open(".github/workflows/python-app.yml", "w")
-        file.write(text)
-        file.close()
