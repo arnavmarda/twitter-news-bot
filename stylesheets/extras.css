@@ -8,3 +8,13 @@
     font-weight: bold;
     font-family: 'Roboto', monospace;
 }
+
+.md-typeset h2 {
+    color: white;
+    font-weight: 600;
+}
+
+.md-typeset h3 {
+    color: white;
+    font-weight: 550;
+}

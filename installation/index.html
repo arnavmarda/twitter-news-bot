@@ -189,7 +189,7 @@
 
   <li class="md-tabs__item">
     <a href=".." class="md-tabs__link">
-      Home
+      Getting Started
     </a>
   </li>
 
@@ -236,6 +236,22 @@
   
 
       
+        
+  
+  
+
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../commands/" class="md-tabs__link">
+        CLI Reference
+      </a>
+    </li>
+  
+
+      
     </ul>
   </div>
 </nav>
@@ -255,7 +271,9 @@
   
 
 
-<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  
+
+<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
     <a href=".." title="twitter-news-bot" class="md-nav__button md-logo" aria-label="twitter-news-bot" data-md-component="logo">
       
@@ -288,7 +306,7 @@
   
     <li class="md-nav__item">
       <a href=".." class="md-nav__link">
-        Home
+        Getting Started
       </a>
     </li>
   
@@ -311,9 +329,61 @@
         
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Installation
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         Installation
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#installing-the-package" class="md-nav__link">
+    Installing the package
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#setting-up-the-env-file" class="md-nav__link">
+    Setting up the .env file
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#getting-the-api-keys-and-tokens" class="md-nav__link">
+    Getting the API keys and tokens
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#package-requirements" class="md-nav__link">
+    Package Requirements
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -413,30 +483,63 @@
   
 
     
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+        
+      
+      <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_5" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+          CLI Reference
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_5">
+          <span class="md-nav__icon md-icon"></span>
+          CLI Reference
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../commands/" class="md-nav__link">
+        Commands
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
   </ul>
 </nav>
                   </div>
                 </div>
               </div>
             
-            
-              
-              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
-                <div class="md-sidebar__scrollwrap">
-                  <div class="md-sidebar__inner">
-                    
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-</nav>
-                  </div>
-                </div>
-              </div>
             
           
           
@@ -450,6 +553,56 @@
 
 
 <h1 id="installation">Installation</h1>
+<h2 id="installing-the-package">Installing the package</h2>
+<p>The fastest and easiest way to install the package is using <code>pip</code>:
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>pip<span class="w"> </span>install<span class="w"> </span>twitternewsbot
+</span></code></pre></div>
+The <code>pip</code> package usually comes installed with python but if you do not have it, you can install it from <a href="https://pip.pypa.io/en/stable/installation/">here</a>.</p>
+<p>You can also install the package by downloading the source code available <a href="https://github.com/arnavmarda/twitter-news-bot/archive/refs/tags/v2.0.zip">here</a>.</p>
+<p>Moreover, you can also <code>git clone</code> the repository:
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/arnavmarda/twitter-news-bot.git
+</span></code></pre></div></p>
+<h2 id="setting-up-the-env-file">Setting up the .env file</h2>
+<p><strong>Note - This step is optional. You can also pass the keys and tokens directly to the API. This will not work for the <code>pip</code> installation.</strong></p>
+<p>twitter-news-bot uses the <code>tweepy</code> API to post tweets and leverages Google PaLM to generate summaries and tweets. To use these APIs, you will need to generate keys and tokens.</p>
+<p>These keys and tokens are stored and read from the <code>.env</code> file in the root directory of your project.</p>
+<p>You can create the file using your IDE or file explorer or simply running the following command in the root directory of your project:
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>touch<span class="w"> </span>.env
+</span></code></pre></div></p>
+<p>The API keys must be stored in the <code>.env</code> file as such:
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="nv">API_KEY</span><span class="o">=</span><span class="s2">&quot;your-key-here&quot;</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="nv">API_SECRET_KEY</span><span class="o">=</span><span class="s2">&quot;your-key-here&quot;</span>
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="nv">ACCESS_TOKEN</span><span class="o">=</span><span class="s2">&quot;your-key-here&quot;</span>
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="nv">ACCESS_TOKEN_SECRET</span><span class="o">=</span><span class="s2">&quot;your-key-here&quot;</span>
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="nv">GOOGLE_API_KEY</span><span class="o">=</span><span class="s2">&quot;your-key-here&quot;</span>
+</span></code></pre></div></p>
+<h2 id="getting-the-api-keys-and-tokens">Getting the API keys and tokens</h2>
+<ol>
+<li>
+<p>To use the <code>tweepy</code> API to post tweets, you must have a Twitter developer account and create an app. You can create an app <a href="https://developer.twitter.com/en/apps">here</a>. Don't worry, Twitter gives you 1 free app. Once you have created an app, you will need to generate the following keys and tokens:</p>
+<ul>
+<li>Consumer API key</li>
+<li>Consumer API secret key</li>
+<li>Access token</li>
+<li>Access token secret</li>
+</ul>
+</li>
+<li>
+<p>To use PaLM to generate tweets and completely automate the process, you will need to generate a PaLM API. To get this, you will need to sign up for the waitlist <a href="https://makersuite.google.com/waitlist">here</a>. You can then generate the API key.</p>
+</li>
+</ol>
+<h2 id="package-requirements">Package Requirements</h2>
+<p>If you are using the <code>pip</code> installation, you do not need to worry about the package requirements. However, if you are using the source code, you will need to install the following packages by running:
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>pip<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </span>requirements.txt
+</span></code></pre></div>
+The tech stack used in this project includes the following open-source libraries:
+- <a href="https://www.tweepy.org/">tweepy</a>
+- <a href="https://pypi.org/project/python-dotenv/">python-dotenv</a>
+- <a href="https://pypi.org/project/requests/">requests</a>
+- <a href="https://pypi.org/project/requests-html/">requests-html</a>
+- <a href="https://pypi.org/project/validators/">validators</a>
+- <a href="https://pypi.org/project/cron-validator/">cron-validator</a>
+- <a href="https://github.com/google/generative-ai-python">google-generativeai</a></p>
 
 
 
@@ -476,7 +629,7 @@
       <nav class="md-footer__inner md-grid" aria-label="Footer" >
         
           
-          <a href=".." class="md-footer__link md-footer__link--prev" aria-label="Previous: Home" rel="prev">
+          <a href=".." class="md-footer__link md-footer__link--prev" aria-label="Previous: Getting Started" rel="prev">
             <div class="md-footer__button md-icon">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
             </div>
@@ -485,7 +638,7 @@
                 Previous
               </span>
               <div class="md-ellipsis">
-                Home
+                Getting Started
               </div>
             </div>
           </a>
@@ -544,7 +697,7 @@
       <div class="md-dialog__inner md-typeset"></div>
     </div>
     
-    <script id="__config" type="application/json">{"base": "..", "features": ["navigation.tabs", "navigation.tracking", "navigation.expand", "navigation.path", "toc.follow", "search.suggest", "search.highlight", "search.share", "navigation.top", "navigation.footer", "instant"], "search": "../assets/javascripts/workers/search.74e28a9f.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    <script id="__config" type="application/json">{"base": "..", "features": ["navigation.tabs", "navigation.tracking", "navigation.expand", "toc.follow", "toc.integrate", "search.suggest", "search.highlight", "search.share", "navigation.top", "navigation.footer", "instant", "content.code.copy"], "search": "../assets/javascripts/workers/search.74e28a9f.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
       <script src="../assets/javascripts/bundle.220ee61c.min.js"></script>
