@@ -6,7 +6,9 @@
 <div align="center">
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![PyPI version](https://badge.fury.io/py/twitternewsbot.svg)](https://badge.fury.io/py/twitternewsbot)
+![PyPI](https://img.shields.io/pypi/v/twitternewsbot?color=cyan)
+[![Downloads](https://static.pepy.tech/badge/twitternewsbot)](https://pepy.tech/project/twitternewsbot)
+![GitHub commit activity (branch)](https://img.shields.io/github/commit-activity/t/arnavmarda/twitter-news-bot)
 
 [![forthebadge made-with-python](http://ForTheBadge.com/images/badges/made-with-python.svg)](https://www.python.org/)
 
