@@ -5,7 +5,17 @@ from tweeter import Tweeter
 class TwitterNewsBot():
     """
     API Object to connect the NewsFinder and Tweeter classes to build a pipeline to automate finding, scraping and tweeting news.
-    Build a .yaml file if needed for Github Actions to run the cron job.
+
+    Attributes
+    ----------
+    news_finder : NewsFinder
+        The NewsFinder object to use to find and scrape news articles
+    tweeter_obj : Tweeter
+        The Tweeter object to use to tweet the news articles
+    topic : str
+        The topic to search for news articles
+    no_of_articles : int
+        The number of articles to find and scrape, by default 5    
     """
 
     #####################################
@@ -95,6 +105,15 @@ class TwitterNewsBot():
         -------
         str
             The topic to search for news articles
+
+        Examples
+        --------
+        >>> from twitternewsbot.twitternewsbot import TwitterNewsBot
+        >>> from twitternewsbot.newsfinder import NewsFinder
+        >>> from twitternewsbot.tweeter import Tweeter
+        >>> bot = TwitterNewsBot(NewsFinder(), Tweeter(), "Python")
+        >>> bot.topic
+        "Python"
         """
         return self.__topic
 
@@ -107,20 +126,25 @@ class TwitterNewsBot():
         topic : str
             The topic to search for news articles
 
-        Returns
-        -------
-        None
-
         Raises
         ------
         TypeError
             If topic is not a string
+
+        Examples
+        --------
+        >>> from twitternewsbot.twitternewsbot import TwitterNewsBot
+        >>> from twitternewsbot.newsfinder import NewsFinder
+        >>> from twitternewsbot.tweeter import Tweeter
+        >>> bot = TwitterNewsBot(NewsFinder(), Tweeter(), "Python")
+        >>> bot.topic = "HTML"
         """
         # Check if topic is a string
         if not isinstance(topic, str):
             raise TypeError("topic must be a string")
         
         self.__topic = topic
+        return self.__topic
 
     @property
     def no_of_articles(self) -> int:
@@ -130,6 +154,15 @@ class TwitterNewsBot():
         -------
         int
             The number of articles to find and scrape
+
+        Examples
+        --------
+        >>> from twitternewsbot.twitternewsbot import TwitterNewsBot
+        >>> from twitternewsbot.newsfinder import NewsFinder
+        >>> from twitternewsbot.tweeter import Tweeter
+        >>> bot = TwitterNewsBot(NewsFinder(), Tweeter(), "Python")
+        >>> bot.no_of_articles
+        5
         """
         return self.__no_of_articles
     
@@ -150,6 +183,14 @@ class TwitterNewsBot():
         ------
         TypeError
             If no_of_articles is not an integer
+
+        Examples
+        --------
+        >>> from twitternewsbot.twitternewsbot import TwitterNewsBot
+        >>> from twitternewsbot.newsfinder import NewsFinder
+        >>> from twitternewsbot.tweeter import Tweeter
+        >>> bot = TwitterNewsBot(NewsFinder(), Tweeter(), "Python")
+        >>> bot.no_of_articles = 10
         """
         # Check if no_of_articles is an integer
         if not isinstance(no_of_articles, int):
@@ -170,6 +211,17 @@ class TwitterNewsBot():
         -------
         dict
             A dictionary containing the total character count, the number of tweets posted, and the id of the parent tweet when run
+        
+        Examples
+        --------
+
+        Creating a basic pipeline to find, scrape and tweet news articles:
+
+        >>> from twitternewsbot.twitternewsbot import TwitterNewsBot
+        >>> from twitternewsbot.newsfinder import NewsFinder
+        >>> from twitternewsbot.tweeter import Tweeter
+        >>> bot = TwitterNewsBot(NewsFinder(), Tweeter(), "Python")
+        >>> bot.run()
         """
 
         # Run the pipeline

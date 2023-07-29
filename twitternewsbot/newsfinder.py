@@ -1,6 +1,5 @@
 # Import statements
 from requests_html import HTMLSession
-import re
 import requests
 import warnings
 from validators.domain import domain
@@ -11,6 +10,13 @@ class NewsFinder():
     """
     API Object to scrape news articles from Google News and scrape the article text from the news website. 
     Allows filtering of Google News results.
+
+    Note: Due to issues with scraping, Daily Mail and News18 are blocked by default. You can unblock them by calling the remove_blocked_source method but this is not advised.
+
+    Attributes
+    ----------
+    blocked_sources : list
+        A list of sources to block, by default includes Daily Mail and News18
     """
 
     #####################################
@@ -23,10 +29,15 @@ class NewsFinder():
         Parameters
         ----------
         blocked_sources : list, optional
-            A list of sources to block, by default includes Daily Mail and News18            
-        """
+            A list of sources to block, by default includes Daily Mail and News18        
 
-        
+        Raises
+        ------
+        TypeError
+            If blocked_sources is not a list
+        TypeError
+            If any element in blocked_sources is not a string    
+        """
 
         if blocked_sources is None:
             self.blocked_sources = ["Daily Mail", "News18"]
@@ -231,6 +242,13 @@ class NewsFinder():
         ------
         TypeError
             If sources is not a list
+
+        Examples
+        --------
+        >>> from twitternewsbot.newsfinder import NewsFinder
+        >>> nf = NewsFinder() 
+        >>> nf.add_blocked_source(["BBC"]) # Add BBC to the list of blocked sources
+        3
         """
 
         # Check if the sources is valid
@@ -262,6 +280,13 @@ class NewsFinder():
         ------
         TypeError
             If sources is not a list
+        
+        Examples
+        --------
+        >>> from twitternewsbot.newsfinder import NewsFinder
+        >>> nf = NewsFinder()
+        >>> nf.remove_blocked_source(["Daily Mail"]) # Remove Daily Mail from the list of blocked sources
+        1
         """
 
         # Check if the sources is valid
@@ -279,6 +304,13 @@ class NewsFinder():
         -------
         list
             The list of blocked sources
+        
+        Examples
+        --------
+        >>> from twitternewsbot.newsfinder import NewsFinder
+        >>> nf = NewsFinder()
+        >>> nf.get_blocked_sources() # Remember, Daily Mail and News18 are blocked by default (due to issues with scraping)
+        ['Daily Mail', 'News18']
         """
 
         return self.blocked_sources
@@ -291,6 +323,13 @@ class NewsFinder():
         -------
         list
             The list of blocked sources
+        
+        Examples
+        --------
+        >>> from twitternewsbot.newsfinder import NewsFinder
+        >>> nf = NewsFinder()
+        >>> nf.blocked_sources # Remember, Daily Mail and News18 are blocked by default (due to issues with scraping)
+        ['Daily Mail', 'News18']
         """
 
         return self.__blocked_sources
@@ -303,15 +342,17 @@ class NewsFinder():
         ----------
         sources : list
             A list of sources to block
-        
-        Returns
-        -------
-        None
             
         Raises
         ------
         TypeError
             If sources is not a list
+
+        Examples
+        --------
+        >>> from twitternewsbot.newsfinder import NewsFinder
+        >>> nf = NewsFinder()
+        >>> nf.blocked_sources = ["BBC"] # Set the list of blocked sources to BBC
         """
 
         # Check if the sources is valid
@@ -319,7 +360,7 @@ class NewsFinder():
             raise TypeError("sources must be a list")
 
         self.__blocked_sources = sources
-    
+
     def update_blocked_sources(self, sources: list) -> int:
         """Update the list of blocked sources by completely replacing existing blocked sources
 
@@ -337,6 +378,13 @@ class NewsFinder():
         ------
         TypeError
             If sources is not a list
+
+        Examples
+        --------
+        >>> from twitternewsbot.newsfinder import NewsFinder
+        >>> nf = NewsFinder()
+        >>> nf.update_blocked_sources(["BBC"]) # Update the list of blocked sources to BBC
+        1
         """
         # Check if the sources is valid
         if not isinstance(sources, list):
@@ -382,6 +430,27 @@ class NewsFinder():
             If the article_text is not a boolean
         ValueError
             If the topic and source are both None
+
+        Examples
+        --------
+
+        Retrieving all articles for a given topic in the last 24 hours without scraping.
+
+        >>> from twitternewsbot.newsfinder import NewsFinder
+        >>> nf = NewsFinder()
+        >>> nf.get_news_articles(topic="Donald Trump", period="Past 24 hours")
+
+        Retrieving all articles for a given topic in the last 24 hours and scraping the article text.
+
+        >>> from twitternewsbot.newsfinder import NewsFinder
+        >>> nf = NewsFinder()
+        >>> nf.get_news_articles(topic="Donald Trump", period="Past 24 hours", article_text=True)
+
+        Retrieving 5 articles from a given source in the last week without scraping.
+
+        >>> from twitternewsbot.newsfinder import NewsFinder
+        >>> nf = NewsFinder()
+        >>> nf.get_news_articles(source="bbc.com", period="Past week", number_of_articles=5)
         """
 
         # Check if the period is valid

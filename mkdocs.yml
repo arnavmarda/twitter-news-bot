@@ -16,23 +16,27 @@ theme:
     - navigation.tracking
     - navigation.expand
     - toc.follow
+    - toc.integrate
     - search.suggest
     - search.highlight
     - search.share
     - navigation.top
     - navigation.footer
     - instant
+    - content.code.copy
   icon:
     repo: fontawesome/brands/github
 
 nav:
-  - Home: index.md
+  - Getting Started: index.md
   - Installation: installation.md
   - Using Github Actions: github-actions.md
   - API Reference:
     - News Finder: newsfinder.md
     - Tweeter: tweeter.md
     - Twitter News Bot: twitternewsbot.md
+  - CLI Reference:
+    - Commands: commands.md
 
 plugins:
   - mkdocstrings:
@@ -40,9 +44,10 @@ plugins:
         python:
           path: [twitternewsbot]
           options:
+            members_order: source
             docstring_style: numpy
             docstring_section_style: spacy
-            members_order: source
+            separate_signature: true
             filters: 
               - "!^__"
   - search
@@ -62,4 +67,15 @@ extra_css:
 
 markdown_extensions:
   - attr_list
+  - mkdocs-click
   - md_in_html
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.superfences
+  - def_list
+  - pymdownx.tasklist:
+      custom_checkbox: true

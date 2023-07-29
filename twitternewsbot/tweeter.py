@@ -8,37 +8,102 @@ class Tweeter():
     """
     API Object allowing users to tweet articles, summaries and other text to Twitter. 
     It leverages PaLM to summarize articles and then tweets them in chunks of 280 characters.
-    Requires having the Twitter API API_KEY, API_SECRET_KEY, ACCESS_TOKEN and ACCESS_TOKEN_SECRET set as environment variables.
+    The API keys required for the Twitter API must be provided as environment variables or as arguments to the constructor.
+    The API key required for the Google API can be provided as environment variables or as an argument to the constructor. 
+    The Google API key is optional. If not provided, the API will not be able to summarize articles.
+
+    Attributes
+    ----------
+    __API_KEY : str
+        The API key for the Twitter API
+    __API_SECRET_KEY : str
+        The API secret key for the Twitter API
+    __ACCESS_TOKEN : str
+        The access token for the Twitter API
+    __ACCESS_TOKEN_SECRET : str
+        The access token secret for the Twitter API
+    __GOOGLE_API_KEY : str
+        The API key for the Google API
+    __client : Client
+        The tweepy client object
     """
 
   #####################################
   # Initialization
   #####################################
     
-    def __init__(self):
-        """Initialize the class with tokens and tweepy client"""
+    def __init__(self, api_key: str|None = None, api_secret_key: str|None = None, access_token: str|None = None, access_token_secret: str|None = None, google_api_key: str|None = None):
+        """Initialize the class with tokens and tweepy client
+        
+        Parameters
+        ----------
+        api_key : str, optional
+            The API key for the Twitter API, by default None
+        api_secret_key : str, optional
+            The API secret key for the Twitter API, by default None
+        access_token : str, optional
+            The access token for the Twitter API, by default None
+        access_token_secret : str, optional
+            The access token secret for the Twitter API, by default None
+        google_api_key : str, optional
+            The API key for the Google API, by default None
+
+        Raises
+        ------
+        Exception
+            If API_KEY is not found in environment variables and not provided as an argument
+        Exception
+            If API_SECRET_KEY is not found in environment variables and not provided as an argument
+        Exception
+            If ACCESS_TOKEN is not found in environment variables and not provided as an argument
+        Exception
+            If ACCESS_TOKEN_SECRET is not found in environment variables and not provided as an argument
+        Exception
+            Twitter API Authentication Failed. Invalid Twitter API Credentials
+        """
 
         # Load environment variables
         load_dotenv()
-        try:
-            self.__API_KEY = os.getenv("API_KEY")
-        except:
-            raise Exception("API_KEY not found in environment variables")
+
+        if api_key is None:
+            try:
+                self.__API_KEY = os.getenv("API_KEY")
+            except:
+                raise Exception("API_KEY not found in environment variables and not provided as an argument")
+        else:
+            self.__API_KEY = api_key
         
-        try:
-            self.__API_SECRET_KEY = os.getenv("API_SECRET_KEY")
-        except:
-            raise Exception("API_SECRET_KEY not found in environment variables")
+        if api_secret_key is None:
+            try:
+                self.__API_SECRET_KEY = os.getenv("API_SECRET_KEY")
+            except:
+                raise Exception("API_SECRET_KEY not found in environment variables and not provided as an argument")
+        else:
+            self.__API_SECRET_KEY = api_secret_key
         
-        try:
-            self.__ACCESS_TOKEN = os.getenv("ACCESS_TOKEN")
-        except:
-            raise Exception("ACCESS_TOKEN not found in environment variables")
+        if access_token is None:
+            try:
+                self.__ACCESS_TOKEN = os.getenv("ACCESS_TOKEN")
+            except:
+                raise Exception("ACCESS_TOKEN not found in environment variables and not provided as an argument")
+        else:
+            self.__ACCESS_TOKEN = access_token
         
-        try:
-            self.__ACCESS_TOKEN_SECRET = os.getenv("ACCESS_TOKEN_SECRET")
-        except:
-            raise Exception("ACCESS_TOKEN_SECRET not found in environment variables")
+        if access_token_secret is None:
+            try:
+                self.__ACCESS_TOKEN_SECRET = os.getenv("ACCESS_TOKEN_SECRET")
+            except:
+                raise Exception("ACCESS_TOKEN_SECRET not found in environment variables and not provided as an argument")
+        else:
+            self.__ACCESS_TOKEN_SECRET = access_token_secret
+        
+        if google_api_key is None:
+            try:
+                self.__GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
+            except:
+                pass
+        else:
+            self.__GOOGLE_API_KEY = google_api_key
 
         try:
             self.__client = Client(consumer_key=self.__API_KEY, 
@@ -161,14 +226,12 @@ class Tweeter():
         """
 
         # Get the API key
-        try:
-            GOOGLE_API_KEY = os.getenv('GOOGLE_API_KEY')
-        except:
+        if self.__GOOGLE_API_KEY is None:
             raise Exception("GOOGLE_API_KEY not found in environment variables")
 
         # Initialize PaLM
         try:
-            palm.configure(api_key=GOOGLE_API_KEY)
+            palm.configure(api_key=self.__GOOGLE_API_KEY)
         except:
             raise Exception("Authentication Failed. Invalid Google API Credentials")
 
@@ -324,6 +387,13 @@ class Tweeter():
         -------
         client : Client
             The tweepy client object
+
+        Examples
+        --------
+        >>> from twitternewsbot.tweeter import Tweeter
+        >>> tweeter = Tweeter()
+        >>> client = tweeter.get_client() # Retrieve your tweety client object
+        >>> client.create_tweet(text="Hello World!") # Tweet Hello World using your account's client
         """
         return self.__client
 
@@ -367,6 +437,30 @@ class Tweeter():
             If tweet and articles_list are both not None
         TypeError
             If prompt is not a string
+
+        Examples
+        --------
+
+        Provide a title and tweet to be posted:
+
+        >>> from twitternewsbot.tweeter import Tweeter
+        >>> tweeter = Tweeter()
+        >>> tweeter.tweet(title="Hello World", tweet="Hello World!")
+
+        Provide a title and articles list to be posted:
+
+        >>> from twitternewsbot.tweeter import Tweeter
+        >>> from twitternewsbot.newsfinder import NewsFinder
+        >>> tweeter = Tweeter()
+        >>> newsfinder = NewsFinder()
+        >>> articles_list = newsfinder.get_news_articles(topic="Bitcoin", num_articles=5, article_text=True) # Article Text must be True if summarizing articles
+        >>> tweeter.tweet(title="Bitcoin News", articles_list=articles_list)
+
+        Provide a prompt to be used with PaLM to generate a tweet:
+
+        >>> from twitternewsbot.tweeter import Tweeter
+        >>> tweeter = Tweeter()
+        >>> tweeter.tweet(title="AI", use_palm=True, prompt="Create a 50 word description of what Artificial Intelligence is.")
         """
 
         # Check if title is valid

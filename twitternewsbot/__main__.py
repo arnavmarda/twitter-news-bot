@@ -51,7 +51,7 @@ def cli():
 @cli.command(name="build-yaml")
 @click.argument("cron")
 @click.argument("filename")
-def build_yaml(cron: str, file_name: str) -> None:
+def build_yaml(cron: str, filename: str) -> None:
     """Build a .yaml file for Github Actions to run the cron job
     
     Parameters
@@ -59,7 +59,7 @@ def build_yaml(cron: str, file_name: str) -> None:
     cron : str
         The cron job to run the pipeline.
         You can get a formatted cron job string from https://crontab.guru/
-    file_name : str
+    filename : str
         The file to run the pipeline from
 
     Returns
@@ -81,7 +81,7 @@ def build_yaml(cron: str, file_name: str) -> None:
         raise TypeError("cron must be a string")
     
     # Check if file is a string
-    if not isinstance(file_name, str):
+    if not isinstance(filename, str):
         raise TypeError("file_name must be a string")
     
     # Check if cron is valid cron job
@@ -89,7 +89,7 @@ def build_yaml(cron: str, file_name: str) -> None:
         raise ValueError("cron must be a valid cron job")
     
     # Build the .yml file
-    text = __give_yaml_text(cron=cron, file=file_name)
+    text = __give_yaml_text(cron=cron, file=filename)
 
     try:
         os.mkdir(".github")

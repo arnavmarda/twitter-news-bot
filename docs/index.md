@@ -14,7 +14,7 @@ A python API allowing users to:
 5. Pipeline and automate the scraping and tweeting procedure using a `cron` job.
 
 ## Quick Start
-For complete documentation and examples, please refer to the [documentation](https://arnavmarda.github.io/twitter-news-bot/).
+For complete documentation and examples, please refer to the [documentation](https://arnavmarda.github.io/twitter-news-bot/installation/).
 
 ### Installation
 ```bash
@@ -22,8 +22,6 @@ pip install twitter-news-bot
 ```
 
 ### Requirements - before using the API
-For more information on how to generate the following keys and tokens, please refer to the [documentation](https://arnavmarda.github.io/twitter-news-bot/).
-
 1. To use the `tweepy` API to post tweets, you must have a Twitter developer account and create an app. You can create an app [here](https://developer.twitter.com/en/apps). Don't worry, Twitter gives you 1 free app. Once you have created an app, you will need to generate the following keys and tokens:
     - Consumer API key
     - Consumer API secret key
@@ -60,5 +58,5 @@ tnb.run()
 ```
 
 ## Future Updates
-- Add support for other summarization models such as OpenAI.
-- Add region based searching for news articles on Google News.
+- [ ] Add support for other summarization models such as OpenAI.
+- [ ] Add region based searching for news articles on Google News.
