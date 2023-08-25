@@ -9,9 +9,6 @@
 ![PyPI](https://img.shields.io/pypi/v/twitternewsbot?color=cyan)
 [![Downloads](https://static.pepy.tech/badge/twitternewsbot)](https://pepy.tech/project/twitternewsbot)
 ![GitHub commit activity (branch)](https://img.shields.io/github/commit-activity/t/arnavmarda/twitter-news-bot)
-
-[![forthebadge made-with-python](http://ForTheBadge.com/images/badges/made-with-python.svg)](https://www.python.org/)
-
 </div>
 
 # twitter-news-bot
